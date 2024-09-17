@@ -1,15 +1,17 @@
 package ci.atos.apireservationservicedomicile.services.dto;
 
 
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ReviewDTO {
+public class ServiceHomeDTO {
     private Long id;
-    private int rating;
-    private String comment;
+    private String name;
+    private String description;
+    private Double price;
     private ProviderDTO provider;
-    private CustomerDTO customer;
+    private ServiceHomeCategoryDTO category;
 }

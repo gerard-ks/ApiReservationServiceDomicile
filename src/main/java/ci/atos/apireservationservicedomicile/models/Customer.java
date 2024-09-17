@@ -1,6 +1,7 @@
 package ci.atos.apireservationservicedomicile.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "CLIENT")
 public class Customer {
     @Id
@@ -18,6 +20,7 @@ public class Customer {
     private String name;
     @Column(name = "telephone")
     private String phone;
+    @Column(unique = true)
     private String email;
     @Column(name = "adresse")
     private String address;

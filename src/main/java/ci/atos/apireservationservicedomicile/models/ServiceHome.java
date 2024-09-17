@@ -1,6 +1,7 @@
 package ci.atos.apireservationservicedomicile.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,8 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "SERVICE")
-public class Service {
+public class ServiceHome {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,4 +25,8 @@ public class Service {
     @ManyToOne
     @JoinColumn(name = "prestataire_id")
     private Provider provider;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private ServiceHomeCategory category;
 }

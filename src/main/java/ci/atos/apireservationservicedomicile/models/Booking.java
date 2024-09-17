@@ -2,6 +2,7 @@ package ci.atos.apireservationservicedomicile.models;
 
 import ci.atos.apireservationservicedomicile.enumerations.BookingStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "RESERVATION")
 public class Booking {
     @Id
@@ -19,8 +21,8 @@ public class Booking {
     private Long id;
     @Column(name = "dateReservation")
     private LocalDateTime bookingTime;
-    @Enumerated(EnumType.STRING)
     @Column(name = "statutReservation")
+    @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
     @ManyToOne

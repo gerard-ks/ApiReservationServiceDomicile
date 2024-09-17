@@ -5,10 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProviderDTO {
+public class ServiceHomeCategoryDTO {
     private Long id;
     private String name;
-    private String phone;
-    private String email;
-    private String address;
+    private String description;
 }

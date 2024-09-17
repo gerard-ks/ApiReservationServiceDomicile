@@ -11,17 +11,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PRESTATAIRE")
-public class Provider {
+@Table(name = "SERVICECATEGORIE")
+public class ServiceHomeCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nom")
     private String name;
-    @Column(name = "telephone")
-    private String phone;
-    @Column(unique = true)
-    private String email;
-    @Column(name = "adresse")
-    private String address;
+    private String description;
 }
