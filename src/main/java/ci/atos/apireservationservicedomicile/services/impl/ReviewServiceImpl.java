@@ -37,14 +37,19 @@ public class ReviewServiceImpl implements ReviewService {
         Provider existingProvider = providerRepository.findById(reviewDTO.getProviderId()).orElseThrow(()-> new MyProviderNotFoundException("Provider " + reviewDTO.getProviderId() + " not found"));
         Customer existingCustomer = customerRepository.findById(reviewDTO.getCustomerId()).orElseThrow(()-> new ClientNotFoundException("Client " + reviewDTO.getCustomerId() + " not found"));
 
+        Review review = getReview(reviewDTO, existingProvider, existingCustomer);
+
+        Review savedReview = reviewRepository.save(review);
+
+        return reviewMapper.toDto(savedReview);
+    }
+
+    private static Review getReview(ReviewRequestDTO reviewDTO, Provider existingProvider, Customer existingCustomer) {
         Review review = new Review();
         review.setRating(reviewDTO.getRating());
         review.setComment(reviewDTO.getComment());
         review.setProvider(existingProvider);
         review.setCustomer(existingCustomer);
-
-        Review savedReview = reviewRepository.save(review);
-
-        return reviewMapper.toDto(savedReview);
+        return review;
     }
 }
