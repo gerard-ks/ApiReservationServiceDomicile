@@ -11,11 +11,13 @@ import ci.atos.apireservationservicedomicile.services.dto.ProviderRequestDTO;
 import ci.atos.apireservationservicedomicile.services.mapper.BookingServiceMapper;
 import ci.atos.apireservationservicedomicile.services.mapper.ProviderMapper;
 import ci.atos.apireservationservicedomicile.web.exception.MyProviderNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class ProviderServiceImpl implements ProviderService {
 
     private final ProviderRepository providerRepository;

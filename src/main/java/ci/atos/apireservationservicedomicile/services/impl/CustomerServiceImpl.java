@@ -7,11 +7,13 @@ import ci.atos.apireservationservicedomicile.services.dto.CustomerDTO;
 import ci.atos.apireservationservicedomicile.services.dto.CustomerRequestDTO;
 import ci.atos.apireservationservicedomicile.services.mapper.CustomerMapper;
 import ci.atos.apireservationservicedomicile.web.exception.CustomerNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;

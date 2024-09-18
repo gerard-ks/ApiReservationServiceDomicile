@@ -4,6 +4,7 @@ import ci.atos.apireservationservicedomicile.services.ProviderService;
 import ci.atos.apireservationservicedomicile.services.dto.ProviderDTO;
 import ci.atos.apireservationservicedomicile.services.dto.ProviderRequestDTO;
 import ci.atos.apireservationservicedomicile.web.exception.MyProviderNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class ProviderResource {
     }
 
     @PostMapping
-    public ResponseEntity<ProviderDTO> createProvider(@RequestBody ProviderRequestDTO providerDTO) {
+    public ResponseEntity<ProviderDTO> createProvider(@Valid @RequestBody ProviderRequestDTO providerDTO) {
         ProviderDTO createdProvider = providerService.createProvider(providerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProvider);
     }

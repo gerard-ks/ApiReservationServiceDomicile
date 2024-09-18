@@ -12,9 +12,11 @@ import ci.atos.apireservationservicedomicile.services.dto.ReviewRequestDTO;
 import ci.atos.apireservationservicedomicile.services.mapper.ReviewMapper;
 import ci.atos.apireservationservicedomicile.web.exception.ClientNotFoundException;
 import ci.atos.apireservationservicedomicile.web.exception.MyProviderNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class ReviewServiceImpl implements ReviewService {
 
     private final ProviderRepository providerRepository;

@@ -17,12 +17,14 @@ import ci.atos.apireservationservicedomicile.web.exception.MyProviderNotFoundExc
 import ci.atos.apireservationservicedomicile.web.exception.ServiceHomeCategoryNotFoundException;
 import ci.atos.apireservationservicedomicile.web.exception.ServiceHomeException;
 import ci.atos.apireservationservicedomicile.web.exception.ServiceHomeNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ServiceHomeServiceImpl implements ServiceHomeService {
 
     private final ServiceHomeRepository serviceHomeRepository;

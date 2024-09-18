@@ -58,11 +58,7 @@ public class BookingServiceImpl implements BookingService {
 
         Customer existingCustomer = customerRepository.findById(bookingDTO.getBooking().getCustomerId()).orElseThrow(()-> new CustomerNotFoundException("Customer " + bookingDTO.getBooking().getCustomerId() + " not found"));
 
-        Booking booking = new Booking();
-        booking.setStatus(BookingStatus.PENDING);
-        booking.setCustomer(existingCustomer);
-        booking.setBookingTime(bookingDTO.getBooking().getBookingTime());
-        Booking savedBooking = bookingRepository.save(booking);
+        Booking savedBooking = getSavedBooking(bookingDTO, existingCustomer);
 
         // Associer les services à la réservation
         for (Long serviceId : serviceIds) {
@@ -71,13 +67,25 @@ public class BookingServiceImpl implements BookingService {
                     .findFirst()
                     .orElseThrow(() -> new BookingNotFoundException("Service " + serviceId + " not found"));
 
-            BookingServiceModel bookingServiceModel = new BookingServiceModel();
-            bookingServiceModel.setBooking(savedBooking);
-            bookingServiceModel.setServiceHome(serviceHome);
-            bookingServiceRepository.save(bookingServiceModel);
+            saveBookingService(savedBooking, serviceHome);
         }
 
         return bookingMapper.toDto(savedBooking);
+    }
+
+    private void saveBookingService(Booking savedBooking, ServiceHome serviceHome) {
+        BookingServiceModel bookingServiceModel = new BookingServiceModel();
+        bookingServiceModel.setBooking(savedBooking);
+        bookingServiceModel.setServiceHome(serviceHome);
+        bookingServiceRepository.save(bookingServiceModel);
+    }
+
+    private Booking getSavedBooking(BookingServiceRequestDTO bookingDTO, Customer existingCustomer) {
+        Booking booking = new Booking();
+        booking.setStatus(BookingStatus.PENDING);
+        booking.setCustomer(existingCustomer);
+        booking.setBookingTime(bookingDTO.getBooking().getBookingTime());
+        return bookingRepository.save(booking);
     }
 
     @Override
