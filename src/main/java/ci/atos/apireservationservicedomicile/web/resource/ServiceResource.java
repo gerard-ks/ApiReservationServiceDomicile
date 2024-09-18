@@ -52,13 +52,9 @@ public class ServiceResource {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteService(@PathVariable Long id) {
-        try {
+    public ResponseEntity<Void> deleteService(@PathVariable Long id) throws ServiceHomeNotFoundException {
             serviceHomeService.deleteService(id);
             return ResponseEntity.noContent().build();
-        } catch (ServiceHomeNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @PostMapping("/categories")

@@ -1,5 +1,6 @@
 package ci.atos.apireservationservicedomicile.services.impl;
 
+import ci.atos.apireservationservicedomicile.enumerations.BookingStatus;
 import ci.atos.apireservationservicedomicile.models.Booking;
 import ci.atos.apireservationservicedomicile.models.BookingServiceModel;
 import ci.atos.apireservationservicedomicile.models.Customer;
@@ -17,11 +18,13 @@ import ci.atos.apireservationservicedomicile.services.mapper.BookingMapper;
 import ci.atos.apireservationservicedomicile.services.mapper.BookingServiceMapper;
 import ci.atos.apireservationservicedomicile.web.exception.BookingNotFoundException;
 import ci.atos.apireservationservicedomicile.web.exception.CustomerNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class BookingServiceImpl implements BookingService {
 
     private final CustomerRepository customerRepository;
@@ -59,7 +62,7 @@ public class BookingServiceImpl implements BookingService {
         Customer existingCustomer = customerRepository.findById(bookingDTO.getBooking().getCustomerId()).orElseThrow(()-> new CustomerNotFoundException("Customer " + bookingDTO.getBooking().getCustomerId() + " not found"));
 
         Booking booking = new Booking();
-        booking.setStatus(bookingDTO.getBooking().getStatus());
+        booking.setStatus(BookingStatus.PENDING);
         booking.setCustomer(existingCustomer);
         booking.setBookingTime(bookingDTO.getBooking().getBookingTime());
         Booking savedBooking = bookingRepository.save(booking);
@@ -117,7 +120,11 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingServiceDTO> getAllBookingsAndServices() {
-        return bookingServiceRepository.findAll()
+
+        List<BookingServiceModel> models = bookingServiceRepository.findAll();
+        log.debug("Booking services found: {}", models);
+
+        return models
                 .stream()
                 .map(bookingServiceMapper::toDto)
                 .toList();

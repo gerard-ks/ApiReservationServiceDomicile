@@ -8,5 +8,5 @@ import lombok.Setter;
 public class BookingServiceDTO {
     private Long id;
     private BookingDTO booking;
-    private ServiceHomeDTO service;
+    private ServiceHomeDTO serviceHome;
 }

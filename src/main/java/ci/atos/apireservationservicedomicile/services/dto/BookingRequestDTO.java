@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class BookingRequestDTO {
     @NotNull(message = "La date de reservation est requis")
     private LocalDateTime bookingTime;
-    @NotNull(message = "Le statut de reservation est requis")
     private BookingStatus status;
     @NotNull(message = "Le client est requis")
     private Long customerId;
