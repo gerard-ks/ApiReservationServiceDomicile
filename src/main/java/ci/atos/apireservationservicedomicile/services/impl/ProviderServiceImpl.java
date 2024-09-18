@@ -1,10 +1,14 @@
 package ci.atos.apireservationservicedomicile.services.impl;
 
+import ci.atos.apireservationservicedomicile.models.BookingServiceModel;
 import ci.atos.apireservationservicedomicile.models.Provider;
+import ci.atos.apireservationservicedomicile.repositories.BookingServiceRepository;
 import ci.atos.apireservationservicedomicile.repositories.ProviderRepository;
 import ci.atos.apireservationservicedomicile.services.ProviderService;
+import ci.atos.apireservationservicedomicile.services.dto.BookingServiceDTO;
 import ci.atos.apireservationservicedomicile.services.dto.ProviderDTO;
 import ci.atos.apireservationservicedomicile.services.dto.ProviderRequestDTO;
+import ci.atos.apireservationservicedomicile.services.mapper.BookingServiceMapper;
 import ci.atos.apireservationservicedomicile.services.mapper.ProviderMapper;
 import ci.atos.apireservationservicedomicile.web.exception.MyProviderNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,10 +20,14 @@ public class ProviderServiceImpl implements ProviderService {
 
     private final ProviderRepository providerRepository;
     private final ProviderMapper providerMapper;
+    private final BookingServiceRepository bookingServiceRepository;
+    private final BookingServiceMapper bookingServiceMapper;
 
-    public ProviderServiceImpl(ProviderRepository providerRepository, ProviderMapper providerMapper) {
+    public ProviderServiceImpl(ProviderRepository providerRepository, ProviderMapper providerMapper, BookingServiceRepository bookingServiceRepository, BookingServiceMapper bookingServiceMapper) {
         this.providerRepository = providerRepository;
         this.providerMapper = providerMapper;
+        this.bookingServiceRepository = bookingServiceRepository;
+        this.bookingServiceMapper = bookingServiceMapper;
     }
 
     @Override

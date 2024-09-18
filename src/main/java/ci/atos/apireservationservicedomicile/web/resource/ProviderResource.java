@@ -56,5 +56,4 @@ public class ProviderResource {
         List<ProviderDTO> providers = providerService.searchProviders(category, name);
         return ResponseEntity.ok(providers);
     }
-
 }

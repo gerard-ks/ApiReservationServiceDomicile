@@ -1,5 +1,6 @@
 package ci.atos.apireservationservicedomicile.services;
 
+import ci.atos.apireservationservicedomicile.services.dto.BookingServiceDTO;
 import ci.atos.apireservationservicedomicile.services.dto.ProviderDTO;
 import ci.atos.apireservationservicedomicile.services.dto.ProviderRequestDTO;
 import ci.atos.apireservationservicedomicile.web.exception.MyProviderNotFoundException;

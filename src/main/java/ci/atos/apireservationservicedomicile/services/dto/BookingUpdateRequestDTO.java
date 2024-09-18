@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class BookingRequestDTO {
-    @NotNull(message = "La date de reservation est requis")
-    private LocalDateTime bookingTime;
+public class BookingUpdateRequestDTO {
+    @NotNull(message = "Le statut est requis")
+    private BookingStatus status;
     @NotNull(message = "Le client est requis")
     private Long customerId;
 }

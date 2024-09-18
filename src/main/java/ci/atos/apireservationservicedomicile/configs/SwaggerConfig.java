@@ -1,2 +1,4 @@
-package ci.atos.apireservationservicedomicile.configs;public class SwaggerConfig {
+package ci.atos.apireservationservicedomicile.configs;
+
+public class SwaggerConfig {
 }

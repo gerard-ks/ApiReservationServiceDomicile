@@ -10,10 +10,7 @@ import ci.atos.apireservationservicedomicile.repositories.BookingServiceReposito
 import ci.atos.apireservationservicedomicile.repositories.CustomerRepository;
 import ci.atos.apireservationservicedomicile.repositories.ServiceHomeRepository;
 import ci.atos.apireservationservicedomicile.services.BookingService;
-import ci.atos.apireservationservicedomicile.services.dto.BookingDTO;
-import ci.atos.apireservationservicedomicile.services.dto.BookingRequestDTO;
-import ci.atos.apireservationservicedomicile.services.dto.BookingServiceDTO;
-import ci.atos.apireservationservicedomicile.services.dto.BookingServiceRequestDTO;
+import ci.atos.apireservationservicedomicile.services.dto.*;
 import ci.atos.apireservationservicedomicile.services.mapper.BookingMapper;
 import ci.atos.apireservationservicedomicile.services.mapper.BookingServiceMapper;
 import ci.atos.apireservationservicedomicile.web.exception.BookingNotFoundException;
@@ -84,7 +81,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingDTO updateBooking(Long id, BookingRequestDTO bookingDTO) throws BookingNotFoundException {
+    public BookingDTO updateBooking(Long id, BookingUpdateRequestDTO bookingDTO) throws BookingNotFoundException {
 
         if (id == null) {
             throw new IllegalArgumentException("Client id cannot be null");
@@ -139,6 +136,17 @@ public class BookingServiceImpl implements BookingService {
         }
 
         return bookingServiceRepository.findByBooking_Customer_Id(clientId)
+                .stream()
+                .map(bookingServiceMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<BookingServiceDTO> getBookingsForProvider(Long providerId) {
+
+        List<BookingServiceModel> bookingServices = bookingServiceRepository.findByServiceHome_Provider_Id(providerId);
+
+        return bookingServices
                 .stream()
                 .map(bookingServiceMapper::toDto)
                 .toList();

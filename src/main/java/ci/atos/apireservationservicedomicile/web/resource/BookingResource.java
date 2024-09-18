@@ -1,10 +1,7 @@
 package ci.atos.apireservationservicedomicile.web.resource;
 
 import ci.atos.apireservationservicedomicile.services.BookingService;
-import ci.atos.apireservationservicedomicile.services.dto.BookingDTO;
-import ci.atos.apireservationservicedomicile.services.dto.BookingRequestDTO;
-import ci.atos.apireservationservicedomicile.services.dto.BookingServiceDTO;
-import ci.atos.apireservationservicedomicile.services.dto.BookingServiceRequestDTO;
+import ci.atos.apireservationservicedomicile.services.dto.*;
 import ci.atos.apireservationservicedomicile.web.exception.BookingNotFoundException;
 import ci.atos.apireservationservicedomicile.web.exception.CustomerNotFoundException;
 import jakarta.validation.Valid;
@@ -31,7 +28,7 @@ public class BookingResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody BookingRequestDTO bookingDTO) throws BookingNotFoundException {
+    public ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody BookingUpdateRequestDTO bookingDTO) throws BookingNotFoundException {
             BookingDTO updatedBooking = bookingService.updateBooking(id, bookingDTO);
             return ResponseEntity.ok(updatedBooking);
     }
@@ -59,4 +56,11 @@ public class BookingResource {
         List<BookingServiceDTO> bookingsAndServices = bookingService.getAllBookingsAndServicesByClientId(clientId);
         return ResponseEntity.ok(bookingsAndServices);
     }
+
+    @GetMapping("/providers/{providerId}")
+    public ResponseEntity<List<BookingServiceDTO>> getBookingsForProvider(@PathVariable Long providerId) {
+        List<BookingServiceDTO> bookings = bookingService.getBookingsForProvider(providerId);
+        return ResponseEntity.ok(bookings);
+    }
+
 }
