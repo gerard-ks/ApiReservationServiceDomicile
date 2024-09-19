@@ -1,6 +1,5 @@
 package ci.atos.apireservationservicedomicile.services.dto;
 
-import ci.atos.apireservationservicedomicile.enumerations.BookingStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

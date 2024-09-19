@@ -1,11 +1,9 @@
 package ci.atos.apireservationservicedomicile.services.dto;
 
-import ci.atos.apireservationservicedomicile.enumerations.BookingStatus;
+import ci.atos.apireservationservicedomicile.models.enumerations.BookingStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

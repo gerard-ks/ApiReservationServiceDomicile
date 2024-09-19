@@ -57,16 +57,21 @@ public class ServiceHomeServiceImpl implements ServiceHomeService {
         Provider existProvider = providerRepository.findById(serviceDTO.getProviderId()).orElseThrow(()-> new MyProviderNotFoundException("Le prestataire n'existe pas " + serviceDTO.getProviderId()));
         ServiceHomeCategory existServiceHomeCategory = serviceHomeCategoryRepository.findById(serviceDTO.getServiceCategoryId()).orElseThrow(()-> new ServiceHomeCategoryNotFoundException("La categorie n'existe pas " + serviceDTO.getServiceCategoryId()));
 
+        ServiceHome serviceHome = getServiceHome(serviceDTO, existServiceHomeCategory, existProvider);
+
+        ServiceHome savedServiceHome = serviceHomeRepository.save(serviceHome);
+
+        return serviceHomeMapper.toDto(savedServiceHome);
+    }
+
+    private static ServiceHome getServiceHome(ServiceHomeRequestDTO serviceDTO, ServiceHomeCategory existServiceHomeCategory, Provider existProvider) {
         ServiceHome serviceHome = new ServiceHome();
         serviceHome.setName(serviceDTO.getName());
         serviceHome.setDescription(serviceDTO.getDescription());
         serviceHome.setPrice(serviceDTO.getPrice());
         serviceHome.setCategory(existServiceHomeCategory);
         serviceHome.setProvider(existProvider);
-
-        ServiceHome savedServiceHome = serviceHomeRepository.save(serviceHome);
-
-        return serviceHomeMapper.toDto(savedServiceHome);
+        return serviceHome;
     }
 
     @Override

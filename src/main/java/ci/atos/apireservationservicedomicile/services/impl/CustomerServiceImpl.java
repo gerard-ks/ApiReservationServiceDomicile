@@ -1,12 +1,15 @@
 package ci.atos.apireservationservicedomicile.services.impl;
 
 import ci.atos.apireservationservicedomicile.models.Customer;
+import ci.atos.apireservationservicedomicile.models.User;
 import ci.atos.apireservationservicedomicile.repositories.CustomerRepository;
+import ci.atos.apireservationservicedomicile.repositories.UserRepository;
 import ci.atos.apireservationservicedomicile.services.CustomerService;
 import ci.atos.apireservationservicedomicile.services.dto.CustomerDTO;
 import ci.atos.apireservationservicedomicile.services.dto.CustomerRequestDTO;
 import ci.atos.apireservationservicedomicile.services.mapper.CustomerMapper;
 import ci.atos.apireservationservicedomicile.web.exception.CustomerNotFoundException;
+import ci.atos.apireservationservicedomicile.web.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +19,12 @@ import java.util.List;
 @Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
+    private final UserRepository userRepository;
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+    public CustomerServiceImpl(UserRepository userRepository, CustomerRepository customerRepository, CustomerMapper customerMapper) {
+        this.userRepository = userRepository;
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
     }
@@ -37,43 +42,64 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO createCustomer(CustomerRequestDTO customerDTO) {
+    public CustomerDTO createCustomer(CustomerRequestDTO customerDTO) throws UserNotFoundException {
+
+        User user = userRepository.findById(customerDTO.getUserId()).orElseThrow(()-> new UserNotFoundException("User " + customerDTO.getUserId() + " not found"));
+        Customer savedCustomer = getSavedCustomer(customerDTO, user);
+        return customerMapper.toDto(savedCustomer);
+    }
+
+    private Customer getSavedCustomer(CustomerRequestDTO customerDTO, User user) {
+        log.debug("function getSavedCustomer");
         Customer customer = new Customer();
-        customer.setName(customerDTO.getName());
+        customer.setFirstName(customerDTO.getFirstName());
+        customer.setLastName(customerDTO.getLastName());
         customer.setAddress(customerDTO.getAddress());
         customer.setPhone(customerDTO.getPhone());
-        customer.setEmail(customerDTO.getEmail());
-        Customer savedCustomer = customerRepository.save(customer);
-        return customerMapper.toDto(savedCustomer);
+        customer.setDateOfBirth(customerDTO.getDateOfBirth());
+        customer.setGender(customerDTO.getGender());
+        customer.setUser(user);
+        return customerRepository.save(customer);
     }
 
     @Override
     public CustomerDTO updateCustomer(Long id, CustomerRequestDTO customerDTO) throws CustomerNotFoundException {
-
+        // Validation de l'ID du client
         if (id == null) {
             throw new IllegalArgumentException("Client id cannot be null");
         }
 
-        Customer existingCustomer = customerRepository.findById(id).orElseThrow(()-> new CustomerNotFoundException("Customer not found " + id));
+        // Recherche du client existant
+        Customer existingCustomer = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found " + id));
 
-        if(customerDTO.getName() != null) {
-            existingCustomer.setName(customerDTO.getName());
+        // Mise à jour des champs
+        if (customerDTO.getFirstName() != null) {
+            existingCustomer.setFirstName(customerDTO.getFirstName());
         }
 
-        if(customerDTO.getAddress() != null) {
+        if (customerDTO.getLastName() != null) {
+            existingCustomer.setLastName(customerDTO.getLastName());
+        }
+
+        if (customerDTO.getAddress() != null) {
             existingCustomer.setAddress(customerDTO.getAddress());
         }
 
-        if(customerDTO.getPhone() != null) {
+        if (customerDTO.getPhone() != null) {
             existingCustomer.setPhone(customerDTO.getPhone());
         }
 
-        if(customerDTO.getEmail() != null) {
-            existingCustomer.setEmail(customerDTO.getEmail());
+        if (customerDTO.getDateOfBirth() != null) {
+            existingCustomer.setDateOfBirth(customerDTO.getDateOfBirth());
         }
 
-        Customer updatedCustomer = customerRepository.save(existingCustomer);
+        if (customerDTO.getGender() != null) {
+            existingCustomer.setGender(customerDTO.getGender());
+        }
 
+        // Sauvegarde et retour du client mis à jour
+        Customer updatedCustomer = customerRepository.save(existingCustomer);
         return customerMapper.toDto(updatedCustomer);
     }
 

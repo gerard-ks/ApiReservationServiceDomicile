@@ -1,4 +1,4 @@
-package ci.atos.apireservationservicedomicile.enumerations;
+package ci.atos.apireservationservicedomicile.models.enumerations;
 
 public enum BookingStatus {
     PENDING,     // Réservation créée mais non encore traitée , en attente

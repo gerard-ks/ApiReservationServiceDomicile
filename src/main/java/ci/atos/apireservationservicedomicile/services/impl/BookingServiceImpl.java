@@ -1,6 +1,6 @@
 package ci.atos.apireservationservicedomicile.services.impl;
 
-import ci.atos.apireservationservicedomicile.enumerations.BookingStatus;
+import ci.atos.apireservationservicedomicile.models.enumerations.BookingStatus;
 import ci.atos.apireservationservicedomicile.models.Booking;
 import ci.atos.apireservationservicedomicile.models.BookingServiceModel;
 import ci.atos.apireservationservicedomicile.models.Customer;

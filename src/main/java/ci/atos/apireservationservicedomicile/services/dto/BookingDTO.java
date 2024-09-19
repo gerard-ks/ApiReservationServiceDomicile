@@ -1,6 +1,6 @@
 package ci.atos.apireservationservicedomicile.services.dto;
 
-import ci.atos.apireservationservicedomicile.enumerations.BookingStatus;
+import ci.atos.apireservationservicedomicile.models.enumerations.BookingStatus;
 import lombok.Getter;
 import lombok.Setter;
 

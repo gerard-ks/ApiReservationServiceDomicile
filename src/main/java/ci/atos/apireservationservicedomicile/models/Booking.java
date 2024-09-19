@@ -1,6 +1,6 @@
 package ci.atos.apireservationservicedomicile.models;
 
-import ci.atos.apireservationservicedomicile.enumerations.BookingStatus;
+import ci.atos.apireservationservicedomicile.models.enumerations.BookingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

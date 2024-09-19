@@ -4,6 +4,7 @@ import ci.atos.apireservationservicedomicile.services.CustomerService;
 import ci.atos.apireservationservicedomicile.services.dto.CustomerDTO;
 import ci.atos.apireservationservicedomicile.services.dto.CustomerRequestDTO;
 import ci.atos.apireservationservicedomicile.web.exception.CustomerNotFoundException;
+import ci.atos.apireservationservicedomicile.web.exception.UserNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/clients")
-public class ClientResource {
+public class CustomerResource {
 
     private final CustomerService customerService;
 
-    public ClientResource(CustomerService customerService) {
+    public CustomerResource(CustomerService customerService) {
         this.customerService = customerService;
     }
 
@@ -28,7 +29,7 @@ public class ClientResource {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerRequestDTO customerDTO) {
+    public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerRequestDTO customerDTO) throws UserNotFoundException {
         CustomerDTO createdCustomer = customerService.createCustomer(customerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
     }
